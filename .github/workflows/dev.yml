@@ -1,4 +1,4 @@
-name: Publish to testPyPI
+name: Build Package
 
 on:
   workflow_dispatch:
@@ -7,8 +7,8 @@ on:
 
 
 jobs:
-  pypi-publish:
-    name: upload release to PyPI
+  builf:
+    name: Build Package
     runs-on: ubuntu-latest
     permissions:
       # 这个权限是为了私有仓库。
