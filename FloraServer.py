@@ -24,7 +24,7 @@ class FloraWebSocketHandler(WebSocketHandler):
         headers = {}
         http_get = self.rfile.readline().decode().strip()
         if not http_get.upper().startswith("GET"):
-            logger.warning("Client 使用了不正确的 HTTP 方法进行请求 WebSocket 通信")
+            logger.warning("The client used an incorrect HTTP method to request WebSocket communication")
             response = "HTTP/1.1 400 Bad Request\r\n\r\n"
             with self._send_lock:
                 self.request.sendall(response.encode())
@@ -49,7 +49,7 @@ class FloraWebSocketHandler(WebSocketHandler):
             try:
                 key = headers.get("sec-websocket-key")
             except KeyError:
-                logger.warning("Client 尝试进行连接, 但缺少密钥")
+                logger.warning("The client attempted to connect, but the Sec-WebSocket-Key is missing")
                 self.keep_alive = False
                 return
             response = self.make_handshake_response(key)
@@ -58,14 +58,14 @@ class FloraWebSocketHandler(WebSocketHandler):
             self.valid_client = True
             self.server._new_client_(self)
         else:
-            logger.warning("Client 使用了不正确的 WebSocket 协议进行通信")
+            logger.warning("The client used an incorrect WebSocket protocol for communication")
             response = "HTTP/1.1 400 Bad Request\r\n\r\n"
             with self._send_lock:
                 self.request.sendall(response.encode())
             self.keep_alive = False
 
 
-class FloraWebsocketServer(WebsocketServer):  # 更加宽松的 WebSocketServer
+class FloraWebsocketServer(WebsocketServer):
     def __init__(self, host="127.0.0.1", port=3000, loglevel=logging.WARNING, key=None, cert=None):
         logger.setLevel(loglevel)
         # noinspection PyTypeChecker
@@ -96,7 +96,7 @@ class FloraFlaskWSHandler(WebSocketHandler):
                 )
             except Exception as e:
                 logger.warning(
-                    "SSL 不可用(密钥和证书的路径 %s 和 %s 是否正确?)",
+                    "SSL not available (are the paths %s and %s correct for the key and cert?)",
                     server.key, server.cert
                 )
         StreamRequestHandler.__init__(self, socket, addr, server)
@@ -124,7 +124,7 @@ class FloraFlaskWSHandler(WebSocketHandler):
 
         key = self.headers.get("sec-websocket-key")
         if not key:
-            logger.error("WebSocket 握手失败: 缺少 Sec-WebSocket-Key")
+            logger.error("WebSocket handshake failed: Sec-WebSocket-Key is missing")
             self.send_http_response(400, "Bad Request: Missing Sec-WebSocket-Key")
             self.keep_alive = False
             return
@@ -136,9 +136,9 @@ class FloraFlaskWSHandler(WebSocketHandler):
             self.handshake_done = True
             self.valid_client = True
             self.server._new_client_(self)
-            logger.info("WebSocket 握手成功")
+            logger.info("WebSocket handshake successful")
         except Exception as e:
-            logger.error(f"握手响应发送失败: {e}")
+            logger.error(f"Handshake response failed to send: {e}")
             self.keep_alive = False
 
     def handle_http_request(self):
@@ -200,7 +200,7 @@ class FloraFlaskWSHandler(WebSocketHandler):
         self.keep_alive = False
 
 
-class FloraFlaskWSServer(WebsocketServer):  # Flask 与 WebSocket-Server 共用一个端口!!!
+class FloraFlaskWSServer(WebsocketServer):
     def __init__(self, flask_app: Flask, host="127.0.0.1", port=3000, loglevel=logging.WARNING, key=None, cert=None):
         logger.setLevel(loglevel)
 
@@ -220,7 +220,7 @@ class FloraFlaskWSServer(WebsocketServer):  # Flask 与 WebSocket-Server 共用�
                         )
                     except Exception as e:
                         logger.warning(
-                            "SSL 不可用(密钥和证书的路径 %s 和 %s 是否正确?)",
+                            "SSL not available (are the paths %s and %s correct for the key and cert?)",
                             server.key, server.cert
                         )
                 StreamRequestHandler.__init__(self, socket, addr, server)
