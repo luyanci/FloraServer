@@ -1,32 +1,21 @@
-# 显示在 GitHub UI 中的 workflow 名称
-name: Publish Python distributions to TestPyPI
-
-# 触发条件，在任何分支有 push 时触发该 workflow
 on:
-  push
+  release:
+    types: [published]
 
-# workflow 由若干个 job 组成，job 之间并行运行，此处只有 testpypi-publish 1 个 job
+
 jobs:
-  # job 标识名称
-  testpypi-publish:
-    # 显示在 GitHub UI 中的 job 名称
-    name: Upload release to TestPyPI
-    # 运行 job 的计算机平台
+  pypi-publish:
+    name: upload release to PyPI
     runs-on: ubuntu-latest
-    # PDM 所需的权限
     permissions:
-      # This permission is needed for private repositories.
+      # 这个权限是为了私有仓库。
       contents: read
-      # IMPORTANT: this permission is mandatory for trusted publishing
+      # 重要提示：这个权限对于可信发布是必需的。
       id-token: write
-    # 每个 job 由若干 step 组成
     steps:
-      # PDM 所需的环境配置
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: pdm-project/setup-pdm@v3
+      - uses: pdm-project/setup-pdm@v4
 
-      # 运行命令行程序，通过 PDM 发布到 TestPyPI
-      # `pdm publish` 命令先完成 `pdm build` 再将 `dist/` 中的内容发布
-      - name: Publish package distributions to TestPyPI
+      - name: Publish package distributions to PyPI
         run: pdm publish
