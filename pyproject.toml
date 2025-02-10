@@ -1,6 +1,6 @@
 [project]
 name = "FloraServer"
-version = "__init__.py:__version__"
+dynamic = ["version"]
 description = "A modified websocket-server that supports communication on the same port as flask"
 authors = [
     {name = "AEBC08", email = "AEBC09@qq.com"},
@@ -17,3 +17,4 @@ build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = true
+version-source = "src/floraserver/__init__.py"
