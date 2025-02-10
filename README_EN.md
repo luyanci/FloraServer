@@ -9,12 +9,12 @@
 ```Shell
 pip install FloraServer
 ```
-3. **Import `FloraServer` into your project `From FloraServer import [class]`**
+3. **Import `FloraServer` into your project `from floraserver import [class]`**
 **There are two `WebSocketServer classes` in this project, one is `FloraFlaskWSServer`, the protagonist of this repository, and the other is `FloraWebsocket Server`, which is not much different from `Websocket Server`, only with relatively loose connections**  
 4. **To start using, follow the development documentation for `flask` and `websocket-server`**
 ## Code Demonstration
 ```Python
-from FloraServer import FloraFlaskWSServer
+from floraserver import FloraFlaskWSServer
 from flask import Flask
 
 app = Flask(__name__)
