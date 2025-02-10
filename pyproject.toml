@@ -1,6 +1,6 @@
 [project]
 name = "FloraServer"
-version = "0.1.0"
+version = "__init__.py:__version__"
 description = "A modified websocket-server that supports communication on the same port as flask"
 authors = [
     {name = "AEBC08", email = "AEBC09@qq.com"},
