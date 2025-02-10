@@ -14,7 +14,7 @@ pip install FloraServer
 4. **开始使用, 按照 `flask` 和 `websocket-server` 开发文档使用即可**
 ## 代码示范
 ```Python
-from FloraServer import FloraFlaskWSServer
+from floraserver import FloraFlaskWSServer
 from flask import Flask
 
 app = Flask(__name__)
