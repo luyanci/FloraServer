@@ -9,7 +9,7 @@
 ```Shell
 pip install FloraServer
 ```
-3. **将 `FloraServer` 导入至您的项目中, `from FloraServer import [类]`**
+3. **将 `FloraServer` 导入至您的项目中, `from floraserver import [类]`**
 **本项目有两个 `WebSocketServer类`, 一个是 `FloraFlaskWSServer`, 本仓库的主角, 另一个是 `FloraWebsocketServer`, 与 `WebsocketServer` 并无太大区别, 只是连接比较宽松而已**  
 4. **开始使用, 按照 `flask` 和 `websocket-server` 开发文档使用即可**
 ## 代码示范
