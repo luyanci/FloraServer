@@ -17,4 +17,4 @@ build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = true
-version-source = "src/floraserver/__init__.py"
+version = {source = "file", path = "src/floraserver/__init__.py"}
